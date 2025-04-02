@@ -1,5 +1,6 @@
 import React from "react";
 import { LOGO_URL } from "../utils/constants";
+import { Link } from "react-router";
 
 const NavBar = () => {
   return (
@@ -11,19 +12,20 @@ const NavBar = () => {
           alt="netflix-logo"
         />
         <ul className="flex items-center gap-6 cursor-pointer">
+          {" "}
           <li
             className="text-lg font-medium hover:text-green-400 transition-colors duration-300 relative 
-                after:content-[''] after:absolute after:w-0 after:h-0.5 after:bg-green-400 after:bottom-[-4px] 
-                after:left-0 after:transition-all after:duration-300 hover:after:w-full"
+              after:content-[''] after:absolute after:w-0 after:h-0.5 after:bg-green-400 after:bottom-[-4px] 
+              after:left-0 after:transition-all after:duration-300 hover:after:w-full"
           >
-            Home
+            <Link to={"/"}>Home</Link>
           </li>
           <li
             className="text-lg font-medium hover:text-green-400 transition-colors duration-300 relative 
                 after:content-[''] after:absolute after:w-0 after:h-0.5 after:bg-green-400 after:bottom-[-4px] 
                 after:left-0 after:transition-all after:duration-300 hover:after:w-full"
           >
-            Contact
+            <Link to={"/trending"}>Trending</Link>
           </li>
           <li
             className="text-lg font-medium hover:text-green-400 transition-colors duration-300 relative 
