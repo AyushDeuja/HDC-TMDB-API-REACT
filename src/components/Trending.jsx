@@ -6,7 +6,7 @@ const Trending = () => {
   const [trendingMovies, setTrendingMovies] = React.useState([]);
   const getTrending = async () => {
     const data = await fetch(
-      "https://api.themoviedb.org/3/movie/popular?language=en-US&page=1",
+      "https://api.themoviedb.org/3/movie/top_rated?page=1",
       API_OPTIONS
     );
     const json = await data.json();
@@ -16,6 +16,7 @@ const Trending = () => {
   useEffect(() => {
     getTrending();
   }, []);
+
   return (
     <>
       <h1 className="text-3xl font-bold text-center p-2">TRENDING MOVIES</h1>

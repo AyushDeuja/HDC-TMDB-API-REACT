@@ -1,8 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import { LOGO_URL } from "../utils/constants";
-import { Link } from "react-router";
+import { NavLink } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setSearchQuery } from "../redux/movieSlice";
 
 const NavBar = () => {
+  const [searchTerm, setSearchTerm] = useState("");
+  const dispatch = useDispatch();
+
+  const handleSearch = () => {
+    dispatch(setSearchQuery(searchTerm)); // Update Redux store with search term
+  };
+
   return (
     <nav className="flex items-center justify-between p-2 bg-gray-600 text-white shadow-lg">
       <div className="flex items-center gap-6">
@@ -12,27 +21,47 @@ const NavBar = () => {
           alt="netflix-logo"
         />
         <ul className="flex items-center gap-6 cursor-pointer">
-          {" "}
-          <li
-            className="text-lg font-medium hover:text-green-400 transition-colors duration-300 relative 
+          <li>
+            <NavLink
+              to="/"
+              className={({ isActive }) =>
+                `text-lg font-medium transition-colors duration-300 relative 
               after:content-[''] after:absolute after:w-0 after:h-0.5 after:bg-green-400 after:bottom-[-4px] 
-              after:left-0 after:transition-all after:duration-300 hover:after:w-full"
-          >
-            <Link to={"/"}>Home</Link>
+              after:left-0 after:transition-all after:duration-300 hover:after:w-full ${
+                isActive ? "after:w-full text-green-400" : ""
+              }`
+              }
+            >
+              Home
+            </NavLink>
           </li>
-          <li
-            className="text-lg font-medium hover:text-green-400 transition-colors duration-300 relative 
-                after:content-[''] after:absolute after:w-0 after:h-0.5 after:bg-green-400 after:bottom-[-4px] 
-                after:left-0 after:transition-all after:duration-300 hover:after:w-full"
-          >
-            <Link to={"/trending"}>Trending</Link>
+          <li>
+            <NavLink
+              to="/trending"
+              className={({ isActive }) =>
+                `text-lg font-medium transition-colors duration-300 relative 
+              after:content-[''] after:absolute after:w-0 after:h-0.5 after:bg-green-400 after:bottom-[-4px] 
+              after:left-0 after:transition-all after:duration-300 hover:after:w-full ${
+                isActive ? "after:w-full text-green-400" : ""
+              }`
+              }
+            >
+              Trending
+            </NavLink>
           </li>
-          <li
-            className="text-lg font-medium hover:text-green-400 transition-colors duration-300 relative 
-                after:content-[''] after:absolute after:w-0 after:h-0.5 after:bg-green-400 after:bottom-[-4px] 
-                after:left-0 after:transition-all after:duration-300 hover:after:w-full"
-          >
-            About
+          <li>
+            <NavLink
+              to="/about"
+              className={({ isActive }) =>
+                `text-lg font-medium transition-colors duration-300 relative 
+              after:content-[''] after:absolute after:w-0 after:h-0.5 after:bg-green-400 after:bottom-[-4px] 
+              after:left-0 after:transition-all after:duration-300 hover:after:w-full ${
+                isActive ? "after:w-full text-green-400" : ""
+              }`
+              }
+            >
+              About
+            </NavLink>
           </li>
         </ul>
       </div>
@@ -41,8 +70,13 @@ const NavBar = () => {
           type="text"
           className="p-2 rounded bg-white text-black focus:outline-none"
           placeholder="Search..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
         />
-        <button className="bg-green-500 hover:bg-green-600 text-white p-2 rounded transition-colors">
+        <button
+          onClick={handleSearch}
+          className="bg-green-500 hover:bg-green-600 text-white p-2 rounded transition-colors"
+        >
           Search
         </button>
       </div>

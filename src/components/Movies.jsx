@@ -1,37 +1,41 @@
-import React, { useEffect, useState } from "react";
-import { API_OPTIONS } from "../utils/constants";
 import Card from "./Card";
+import useMovie from "../hooks/useMovie";
+import { useSelector } from "react-redux";
 
 const Movies = () => {
-  const [movies, setMovies] = useState([]);
+  useMovie();
+  const movies = useSelector((state) => state.movies);
+  const searchQuery = useSelector((state) => state.movies.searchQuery); // Get search query from Redux
 
-  const getMovies = async () => {
-    const data = await fetch(
-      "https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=2&sort_by=popularity.desc",
-      API_OPTIONS
-    );
-    const json = await data.json();
-    setMovies(json.results);
-    console.log(json);
-  };
-  useEffect(() => {
-    getMovies();
-  }, []);
+  if (!movies || !movies.movieCards) {
+    return <h1>Loading movies...</h1>;
+  }
+
+  // Filter movies based on search query
+  const filteredMovies = movies.movieCards.filter((movie) =>
+    movie.original_title.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
     <>
       <h1 className="text-3xl font-bold text-center p-2">All MOVIES</h1>
-
       <div className="flex flex-wrap gap-10 justify-center mt-5">
-        {movies.map((movie) => (
-          <Card
-            key={movie.id}
-            id={movie.id}
-            posterPath={movie.poster_path}
-            title={movie.original_title}
-            rating={movie.vote_average}
-            releaseDate={movie.release_date}
-          />
-        ))}
+        {filteredMovies.length > 0 ? (
+          filteredMovies.map((movie) => (
+            <Card
+              key={movie.id}
+              id={movie.id}
+              posterPath={movie.poster_path}
+              title={movie.original_title}
+              rating={movie.vote_average}
+              releaseDate={movie.release_date}
+            />
+          ))
+        ) : (
+          <h2 className="text-xl font-semibold text-center text-red-500">
+            No movies found
+          </h2>
+        )}
       </div>
     </>
   );
