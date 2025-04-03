@@ -1,41 +1,62 @@
+import React, { useEffect, useState } from "react";
 import Card from "./Card";
 import useMovie from "../hooks/useMovie";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setMovies } from "../redux/movieSlice";
+import { API_OPTIONS } from "../utils/constants";
 
 const Movies = () => {
-  useMovie();
-  const movies = useSelector((state) => state.movies);
-  const searchQuery = useSelector((state) => state.movies.searchQuery); // Get search query from Redux
+  const dispatch = useDispatch();
+  const [loading, setLoading] = useState(false);
+  const movies = useSelector((state) => state.movies.movieCards);
+  const searchQuery = useSelector((state) => state.movies.searchQuery);
 
-  if (!movies || !movies.movieCards) {
+  // Fetch movies initially using the useMovie hook
+  useMovie();
+
+  const searchMovie = async () => {
+    if (!searchQuery) return; // Only search if there is a search query
+
+    setLoading(true);
+    const data = await fetch(
+      `https://api.themoviedb.org/3/search/movie?query=${searchQuery}&include_adult=false&language=en-US&page=1`,
+      API_OPTIONS
+    );
+    const json = await data.json();
+    dispatch(setMovies(json.results)); // Set the results to Redux store
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    searchMovie(); // Trigger the search whenever the searchQuery changes
+  }, [searchQuery]);
+
+  if (loading) {
     return <h1>Loading movies...</h1>;
   }
 
-  // Filter movies based on search query
-  const filteredMovies = movies.movieCards.filter((movie) =>
-    movie.original_title.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  if (!movies || movies.length === 0) {
+    return (
+      <h1 className="text-2xl font-bold text-center text-red-500">
+        No movies available
+      </h1>
+    );
+  }
 
   return (
     <>
       <h1 className="text-3xl font-bold text-center p-2">All MOVIES</h1>
       <div className="flex flex-wrap gap-10 justify-center mt-5">
-        {filteredMovies.length > 0 ? (
-          filteredMovies.map((movie) => (
-            <Card
-              key={movie.id}
-              id={movie.id}
-              posterPath={movie.poster_path}
-              title={movie.original_title}
-              rating={movie.vote_average}
-              releaseDate={movie.release_date}
-            />
-          ))
-        ) : (
-          <h2 className="text-xl font-semibold text-center text-red-500">
-            No movies found
-          </h2>
-        )}
+        {movies.map((movie) => (
+          <Card
+            key={movie.id}
+            id={movie.id}
+            posterPath={movie.poster_path}
+            title={movie.original_title}
+            rating={movie.vote_average}
+            releaseDate={movie.release_date}
+          />
+        ))}
       </div>
     </>
   );
