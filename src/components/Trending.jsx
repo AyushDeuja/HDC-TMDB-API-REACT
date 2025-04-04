@@ -1,27 +1,57 @@
-import React, { useEffect } from "react";
-import { API_OPTIONS } from "../utils/constants";
+import { useEffect, useState } from "react";
 import Card from "./Card";
+import useTrendingMovie from "../hooks/useTrendingMovie";
+import { useDispatch, useSelector } from "react-redux";
+import { API_OPTIONS } from "../utils/constants";
+import { setTrendingMovies } from "../redux/movieSlice";
 
 const Trending = () => {
-  const [trendingMovies, setTrendingMovies] = React.useState([]);
-  const getTrending = async () => {
+  const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
+  const trendingMovieCards = useSelector(
+    (state) => state.movies.trendingMovieCards
+  );
+  const searchQuery = useSelector((state) => state.movies.searchQuery);
+
+  useTrendingMovie();
+
+  const searchMovie = async () => {
+    if (!searchQuery) return;
+
+    setLoading(true);
     const data = await fetch(
-      "https://api.themoviedb.org/3/movie/top_rated?page=1",
+      `https://api.themoviedb.org/3/search/movie?query=${searchQuery}&include_adult=false&language=en-US&page=1`,
       API_OPTIONS
     );
     const json = await data.json();
-    setTrendingMovies(json.results);
-    console.log(json);
+    dispatch(setTrendingMovies(json.results));
+    setLoading(false);
   };
-  useEffect(() => {
-    getTrending();
-  }, []);
 
+  useEffect(() => {
+    searchMovie();
+  }, [searchQuery]);
+
+  if (loading) {
+    return (
+      <h1 className="text-5xl font-bold text-center text-red-500">
+        Loading...
+      </h1>
+    );
+  }
+
+  if (!trendingMovieCards || trendingMovieCards.length === 0) {
+    return (
+      <h1 className="text-5xl font-bold text-center text-red-500">
+        No movies available
+      </h1>
+    );
+  }
   return (
     <>
       <h1 className="text-3xl font-bold text-center p-2">TRENDING MOVIES</h1>
       <div className="flex flex-wrap gap-10 justify-center mt-5">
-        {trendingMovies.map((movie) => (
+        {trendingMovieCards.map((movie) => (
           <Card
             key={movie.id}
             id={movie.id}

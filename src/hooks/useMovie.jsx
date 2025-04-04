@@ -17,8 +17,6 @@ const useMovie = () => {
   useEffect(() => {
     getMovies();
   }, []);
-
-  return <div></div>;
 };
 
 export default useMovie;

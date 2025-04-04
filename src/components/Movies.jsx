@@ -23,21 +23,25 @@ const Movies = () => {
       API_OPTIONS
     );
     const json = await data.json();
-    dispatch(setMovies(json.results)); // Set the results to Redux store
+    dispatch(setMovies(json.results));
     setLoading(false);
   };
 
   useEffect(() => {
-    searchMovie(); // Trigger the search whenever the searchQuery changes
+    searchMovie();
   }, [searchQuery]);
 
   if (loading) {
-    return <h1>Loading movies...</h1>;
+    return (
+      <h1 className="text-5xl font-bold text-center text-red-500">
+        Loading...
+      </h1>
+    ); // Display loading message during fetch
   }
 
   if (!movies || movies.length === 0) {
     return (
-      <h1 className="text-2xl font-bold text-center text-red-500">
+      <h1 className="text-5xl font-bold text-center text-red-500">
         No movies available
       </h1>
     );

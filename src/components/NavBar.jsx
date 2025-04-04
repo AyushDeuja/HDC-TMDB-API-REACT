@@ -13,7 +13,7 @@ const NavBar = () => {
   };
 
   return (
-    <nav className="flex items-center justify-between p-2 bg-gray-600 text-white shadow-lg">
+    <nav className="flex items-center justify-between p-2 bg-gray-600 text-white shadow-lg sticky top-0 z-50">
       <div className="flex items-center gap-6">
         <img
           className="w-44 mx-auto md:mx-0"
@@ -26,10 +26,10 @@ const NavBar = () => {
               to="/"
               className={({ isActive }) =>
                 `text-lg font-medium transition-colors duration-300 relative 
-              after:content-[''] after:absolute after:w-0 after:h-0.5 after:bg-green-400 after:bottom-[-4px] 
-              after:left-0 after:transition-all after:duration-300 hover:after:w-full ${
-                isActive ? "after:w-full text-green-400" : ""
-              }`
+            after:content-[''] after:absolute after:w-0 after:h-0.5 after:bg-green-400 after:bottom-[-4px] 
+            after:left-0 after:transition-all after:duration-300 hover:after:w-full ${
+              isActive ? "after:w-full text-green-400" : ""
+            }`
               }
             >
               Home
@@ -40,10 +40,10 @@ const NavBar = () => {
               to="/trending"
               className={({ isActive }) =>
                 `text-lg font-medium transition-colors duration-300 relative 
-              after:content-[''] after:absolute after:w-0 after:h-0.5 after:bg-green-400 after:bottom-[-4px] 
-              after:left-0 after:transition-all after:duration-300 hover:after:w-full ${
-                isActive ? "after:w-full text-green-400" : ""
-              }`
+            after:content-[''] after:absolute after:w-0 after:h-0.5 after:bg-green-400 after:bottom-[-4px] 
+            after:left-0 after:transition-all after:duration-300 hover:after:w-full ${
+              isActive ? "after:w-full text-green-400" : ""
+            }`
               }
             >
               Trending
@@ -54,10 +54,10 @@ const NavBar = () => {
               to="/about"
               className={({ isActive }) =>
                 `text-lg font-medium transition-colors duration-300 relative 
-              after:content-[''] after:absolute after:w-0 after:h-0.5 after:bg-green-400 after:bottom-[-4px] 
-              after:left-0 after:transition-all after:duration-300 hover:after:w-full ${
-                isActive ? "after:w-full text-green-400" : ""
-              }`
+            after:content-[''] after:absolute after:w-0 after:h-0.5 after:bg-green-400 after:bottom-[-4px] 
+            after:left-0 after:transition-all after:duration-300 hover:after:w-full ${
+              isActive ? "after:w-full text-green-400" : ""
+            }`
               }
             >
               About
