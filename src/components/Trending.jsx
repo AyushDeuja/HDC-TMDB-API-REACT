@@ -1,66 +1,38 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Card from "./Card";
-import useTrendingMovie from "../hooks/useTrendingMovie";
 import { useDispatch, useSelector } from "react-redux";
-import { API_OPTIONS } from "../utils/constants";
-import { setTrendingMovies } from "../redux/movieSlice";
-
+import { fetchTrendingMovies } from "../redux/movieSlice";
 const Trending = () => {
-  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const trendingMovieCards = useSelector(
     (state) => state.movies.trendingMovieCards
   );
   const searchQuery = useSelector((state) => state.movies.searchQuery);
 
-  useTrendingMovie();
-
-  const searchMovie = async () => {
-    if (!searchQuery) return;
-
-    setLoading(true);
-    const data = await fetch(
-      `https://api.themoviedb.org/3/search/movie?query=${searchQuery}&include_adult=false&language=en-US&page=1`,
-      API_OPTIONS
-    );
-    const json = await data.json();
-    dispatch(setTrendingMovies(json.results));
-    setLoading(false);
-  };
-
   useEffect(() => {
-    searchMovie();
+    dispatch(fetchTrendingMovies(searchQuery));
   }, [searchQuery]);
 
-  if (loading) {
-    return (
-      <h1 className="text-5xl font-bold text-center text-red-500">
-        Loading...
-      </h1>
-    );
-  }
-
-  if (!trendingMovieCards || trendingMovieCards.length === 0) {
-    return (
-      <h1 className="text-5xl font-bold text-center text-red-500">
-        No movies available
-      </h1>
-    );
-  }
   return (
     <>
       <h1 className="text-3xl font-bold text-center p-2">TRENDING MOVIES</h1>
       <div className="flex flex-wrap gap-10 justify-center mt-5">
-        {trendingMovieCards.map((movie) => (
-          <Card
-            key={movie.id}
-            id={movie.id}
-            posterPath={movie.poster_path}
-            title={movie.original_title}
-            rating={movie.vote_average}
-            releaseDate={movie.release_date}
-          />
-        ))}
+        {trendingMovieCards.length > 0 ? (
+          trendingMovieCards.map((movie) => (
+            <Card
+              key={movie.id}
+              id={movie.id}
+              posterPath={movie.poster_path}
+              title={movie.original_title}
+              rating={movie.vote_average}
+              releaseDate={movie.release_date}
+            />
+          ))
+        ) : (
+          <h2 className="text-5xl font-bold text-center text-red-500">
+            No movies found
+          </h2>
+        )}
       </div>
     </>
   );
