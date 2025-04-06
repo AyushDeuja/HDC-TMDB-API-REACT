@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Card from "./Card";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchTrendingMovies } from "../redux/movieSlice";
@@ -8,10 +8,30 @@ const Trending = () => {
     (state) => state.movies.trendingMovieCards
   );
   const searchQuery = useSelector((state) => state.movies.searchQuery);
+  const [favourites, setFavourites] = useState([]);
 
   useEffect(() => {
     dispatch(fetchTrendingMovies(searchQuery));
   }, [searchQuery]);
+  useEffect(() => {
+    const storedFavourites =
+      JSON.parse(localStorage.getItem("favourites")) || [];
+    setFavourites(storedFavourites);
+  }, []);
+
+  const handleFavourite = (movie) => {
+    let updatedFavourites;
+    const isMovieFavourite = favourites.some((fav) => fav.id === movie.id);
+
+    if (isMovieFavourite) {
+      updatedFavourites = favourites.filter((fav) => fav.id !== movie.id);
+    } else {
+      updatedFavourites = [...favourites, movie];
+    }
+
+    setFavourites(updatedFavourites);
+    localStorage.setItem("favourites", JSON.stringify(updatedFavourites));
+  };
 
   return (
     <>
@@ -20,6 +40,8 @@ const Trending = () => {
         {trendingMovieCards.length > 0 ? (
           trendingMovieCards.map((movie) => (
             <Card
+              isMovieFavourite={favourites}
+              addFavourite={() => handleFavourite(movie)}
               key={movie.id}
               id={movie.id}
               posterPath={movie.poster_path}
