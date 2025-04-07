@@ -18,6 +18,7 @@ export const fetchMovies = createAsyncThunk(
       );
     }
     const json = await data.json();
+    console.log(json.results);
     return json.results;
   }
 );
@@ -51,6 +52,7 @@ const movieSlice = createSlice({
     movieCards: [],
     trendingMovieCards: [],
     searchQuery: "",
+    favouriteMovies: JSON.parse(localStorage.getItem("favouriteMovies")) || [],
   },
   reducers: {
     setTrendingMovies: (state, action) => {
@@ -58,6 +60,14 @@ const movieSlice = createSlice({
     },
     setSearchQuery: (state, action) => {
       state.searchQuery = action.payload;
+    },
+    addFavouriteMovie: (state, action) => {
+      state.favouriteMovies.push(action.payload);
+    },
+    removeFavouriteMovie: (state, action) => {
+      state.favouriteMovies = state.favouriteMovies.filter(
+        (movie) => movie.id !== action.payload.id
+      );
     },
   },
   extraReducers: (builder) => {
@@ -88,5 +98,10 @@ const movieSlice = createSlice({
   },
 });
 
-export const { setSearchQuery, setTrendingMovies } = movieSlice.actions;
+export const {
+  setSearchQuery,
+  setTrendingMovies,
+  addFavouriteMovie,
+  removeFavouriteMovie,
+} = movieSlice.actions;
 export default movieSlice.reducer;

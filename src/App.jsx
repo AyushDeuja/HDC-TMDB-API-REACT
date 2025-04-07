@@ -6,6 +6,7 @@ import MovieDetails from "./components/MovieDetails";
 import { Provider } from "react-redux";
 import About from "./components/About";
 import store from "./redux/store";
+import FavouriteMovies from "./components/FavouriteMovies";
 
 function AppLayout() {
   return (
@@ -36,6 +37,10 @@ const appRouter = createBrowserRouter([
       {
         path: "/movieDetails/:id",
         element: <MovieDetails />,
+      },
+      {
+        path: "/favourites",
+        element: <FavouriteMovies />,
       },
     ],
   },

@@ -51,6 +51,20 @@ const NavBar = () => {
           </li>
           <li>
             <NavLink
+              to="/favourites"
+              className={({ isActive }) =>
+                `text-lg font-medium transition-colors duration-300 relative 
+            after:content-[''] after:absolute after:w-0 after:h-0.5 after:bg-green-400 after:bottom-[-4px] 
+            after:left-0 after:transition-all after:duration-300 hover:after:w-full ${
+              isActive ? "after:w-full text-green-400" : ""
+            }`
+              }
+            >
+              Favourites
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
               to="/about"
               className={({ isActive }) =>
                 `text-lg font-medium transition-colors duration-300 relative 
