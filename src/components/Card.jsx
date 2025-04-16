@@ -21,12 +21,12 @@ const Card = ({ movie }) => {
       <img
         src={IMG_CDN_URL + movie.poster_path}
         alt="MovieCard"
-        className="rounded-t-lg"
+        className="rounded-t-lg "
       />
       <div className="p-2">
         <p className="font-bold text-lg">{movie.original_title}</p>
         <p className="text-gray-600">{movie.vote_average}⭐</p>
-        <p className="text-gray-500">{movie.release_date}</p>
+        <p className="text-gray-400">{movie.release_date}</p>
         <div className="flex justify-between items-center mt-2">
           <button className="px-4 py-2 bg-blue-400 text-white font-semibold rounded-lg shadow-md hover:bg-blue-200 transition duration-300">
             <Link to={`/movieDetails/${movie.id}`}>Details</Link>
