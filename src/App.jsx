@@ -7,6 +7,7 @@ import { Provider } from "react-redux";
 import About from "./components/About";
 import store from "./redux/store";
 import FavouriteMovies from "./components/FavouriteMovies";
+import ThemeToggler from "./components/ThemeToggler";
 
 function AppLayout() {
   return (
