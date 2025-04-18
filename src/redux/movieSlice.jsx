@@ -26,17 +26,20 @@ export const fetchMovies = createAsyncThunk(
 export const fetchTrendingMovies = createAsyncThunk(
   "movies/fetchTrendingMovies",
   async (searchQuery) => {
+    //fetching trending movies
     let data = await fetch(
       "https://api.themoviedb.org/3/trending/movie/day?api_key=b0a3f6e0c5b35d0b4a8d7c0d6cd334a6&language=en-US&page=1",
       API_OPTIONS
     );
     if (searchQuery) {
       data = await fetch(
+        //fetching movies based on search query
         `https://api.themoviedb.org/3/search/movie?query=${searchQuery}&include_adult=false&language=en-US&page=1`,
         API_OPTIONS
       );
     } else {
       data = await fetch(
+        //fetching top rated movies
         "https://api.themoviedb.org/3/movie/top_rated?page=1",
         API_OPTIONS
       );
