@@ -27,7 +27,7 @@ const MovieDetail = () => {
   return (
     <>
       <div className="flex justify-center items-center min-h-screen">
-        <div className="max-w-xs rounded-lg shadow-lg bg-gray-900 text-white">
+        <div className="max-w-xs rounded-lg shadow-lg bg-gray-900 text-white ">
           <img
             className="w-full h-96 object-cover rounded-t-lg"
             src={`https://image.tmdb.org/t/p/w500${movieDetail.poster_path}`}
