@@ -47,11 +47,7 @@ const appRouter = createBrowserRouter([
       },
       {
         path: "/trending",
-        element: (
-          <PrivateRoute>
-            <Trending />
-          </PrivateRoute>
-        ),
+        element: <Trending />,
       },
       {
         path: "/about",
@@ -63,7 +59,11 @@ const appRouter = createBrowserRouter([
       },
       {
         path: "/favourites",
-        element: <FavouriteMovies />,
+        element: (
+          <PrivateRoute>
+            <FavouriteMovies />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/login",

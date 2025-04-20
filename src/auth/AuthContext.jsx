@@ -10,7 +10,7 @@ const AuthProvier = ({ children }) => {
   const login = (username, password) => {
     if (username === "admin" && password === "admin") {
       setUser({ username });
-      navigate("/trending");
+      navigate("/favourites");
     } else {
       alert("Invalid credentials");
     }
