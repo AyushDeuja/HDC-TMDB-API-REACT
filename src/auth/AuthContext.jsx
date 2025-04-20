@@ -1,10 +1,10 @@
-import React, { createContext, useContext } from "react";
+import React, { createContext, useContext, useState } from "react";
 import { useNavigate } from "react-router";
 
 const AuthContext = createContext();
 
 const AuthProvier = ({ children }) => {
-  cosnt[(user, setUser)] = useState(null);
+  const [user, setUser] = useState(null);
   const navigate = useNavigate();
 
   const login = (username, password) => {
