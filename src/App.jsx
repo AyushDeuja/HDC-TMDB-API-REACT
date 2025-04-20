@@ -9,6 +9,7 @@ import store from "./redux/store";
 import FavouriteMovies from "./components/FavouriteMovies";
 import ThemeToggler from "./components/ThemeToggler";
 import { Suspense } from "react";
+import Login from "./components/Login";
 
 // lazy loading the components
 // This is a performance optimization technique that allows you to load components only when they are needed, rather than loading them all at once when the app starts. This can help reduce the initial load time of your app and improve its overall performance.
