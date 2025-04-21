@@ -15,7 +15,7 @@ const Login = () => {
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <div className="bg-white p-8 rounded-2xl shadow-lg w-full max-w-md">
         <h2 className="text-2xl font-bold text-center mb-6 text-gray-800">
-          Login
+          Login to access favourite movies
         </h2>
         <form className="space-y-4" onSubmit={handleSubmit}>
           <div>
