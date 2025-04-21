@@ -13,5 +13,8 @@ export default defineConfig({
     "process.env.REACT_APP_TMDB_KEY": JSON.stringify(
       process.env.REACT_APP_TMDB_KEY
     ),
+    server: {
+      port: 5000, // change this to your desired port
+    },
   },
 });
