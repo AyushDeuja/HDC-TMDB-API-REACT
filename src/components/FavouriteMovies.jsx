@@ -12,7 +12,7 @@ const FavouriteMovies = () => {
         <h1 className="text-3xl font-bold text-center">Favourite Movies</h1>
         <button
           onClick={logout}
-          className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded shadow transition"
+          className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-sm shadow transition"
         >
           Logout
         </button>
