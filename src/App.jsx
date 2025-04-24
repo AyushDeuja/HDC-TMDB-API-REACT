@@ -6,7 +6,6 @@ import NavBar from "./components/NavBar";
 import Movies from "./components/Movies";
 import Trending from "./components/Trending";
 import MovieDetails from "./components/MovieDetails";
-import About from "./components/About";
 import FavouriteMovies from "./components/FavouriteMovies";
 // import ThemeToggler from "./components/ThemeToggler";
 import Login from "./components/Login";
@@ -15,6 +14,7 @@ import AuthProvier from "./auth/AuthContext";
 import PrivateRoute from "./auth/PrivateRoute";
 
 import store from "./redux/store";
+import Admin from "./components/Admin";
 
 // You can enable lazy loading like this later:
 // const Movies = lazy(() => import("./components/Movies"));
@@ -50,8 +50,8 @@ const appRouter = createBrowserRouter([
         element: <Trending />,
       },
       {
-        path: "/about",
-        element: <About />,
+        path: "/admin",
+        element: <Admin />,
       },
       {
         path: "/movieDetails/:id",

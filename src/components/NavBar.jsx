@@ -65,7 +65,7 @@ const NavBar = () => {
           </li>
           <li>
             <NavLink
-              to="/about"
+              to="/admin"
               className={({ isActive }) =>
                 `text-lg font-medium transition-colors duration-300 relative 
             after:content-[''] after:absolute after:w-0 after:h-0.5 after:bg-green-400 after:bottom-[-4px] 
@@ -74,7 +74,7 @@ const NavBar = () => {
             }`
               }
             >
-              About
+              Admin
             </NavLink>
           </li>
         </ul>
