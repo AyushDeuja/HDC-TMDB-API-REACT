@@ -6,11 +6,11 @@ import { setSearchQuery } from "../redux/movieSlice";
 
 const NavBar = () => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [isMenuOpen, setIsMenuOpen] = useState(false); // State for mobile menu
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const dispatch = useDispatch();
 
   const handleSearch = () => {
-    dispatch(setSearchQuery(searchTerm)); // Update Redux store with search term
+    dispatch(setSearchQuery(searchTerm));
   };
 
   return (
