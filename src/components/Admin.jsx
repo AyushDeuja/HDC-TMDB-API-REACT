@@ -69,7 +69,6 @@ const Admin = () => {
             onChange={(e) => setImg(e.target.value)}
             className="w-full p-2 border border-gray-300 rounded"
             placeholder="Enter image URL"
-            required
           />
         </div>
         <div className="mb-4">
