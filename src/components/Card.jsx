@@ -28,7 +28,7 @@ const Card = ({ movie }) => {
         <p className="text-gray-600">{movie.vote_average}⭐</p>
         <p className="text-gray-400">{movie.release_date}</p>
         <div className="flex justify-between items-center mt-2">
-          <button className="px-4 py-2 bg-blue-400 text-white font-semibold rounded-lg shadow-md hover:bg-blue-200 transition duration-300">
+          <button className="px-4 py-2 bg-green-500 text-white font-semibold rounded-lg shadow-md hover:bg-green-200 transition duration-300">
             <Link to={`/movieDetails/${movie.id}`}>Details</Link>
           </button>
           <button

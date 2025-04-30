@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { API_OPTIONS } from "../utils/constants";
 
-// Async thunk to fetch movies
 export const fetchMovies = createAsyncThunk(
   "movies/fetchMovies",
   async ({ searchQuery, page = 1 }) => {
@@ -15,7 +14,6 @@ export const fetchMovies = createAsyncThunk(
   }
 );
 
-// Optional: Keep trending fetch here if needed
 export const fetchTrendingMovies = createAsyncThunk(
   "movies/fetchTrendingMovies",
   async () => {
@@ -43,7 +41,7 @@ const movieSlice = createSlice({
   reducers: {
     setSearchQuery: (state, action) => {
       state.searchQuery = action.payload;
-      state.currentPage = 1; // reset to page 1 on new search
+      state.currentPage = 1;
     },
     setCurrentPage: (state, action) => {
       state.currentPage = action.payload;
