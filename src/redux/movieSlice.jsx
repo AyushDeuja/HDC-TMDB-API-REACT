@@ -16,13 +16,21 @@ export const fetchMovies = createAsyncThunk(
 
 export const fetchTrendingMovies = createAsyncThunk(
   "movies/fetchTrendingMovies",
-  async () => {
-    const response = await fetch(
-      "https://api.themoviedb.org/3/trending/movie/day?language=en-US",
-      API_OPTIONS
-    );
-    const data = await response.json();
-    return data.results;
+  async (searchQuery) => {
+    let data;
+    if (searchQuery) {
+      data = await fetch(
+        `https://api.themoviedb.org/3/search/movie?query=${searchQuery}&include_adult=false&language=en-US&page=1`,
+        API_OPTIONS
+      );
+    } else {
+      data = await fetch(
+        "https://api.themoviedb.org/3/trending/movie/day?language=en-US&page=1",
+        API_OPTIONS
+      );
+    }
+    const json = await data.json();
+    return json.results;
   }
 );
 
@@ -41,7 +49,7 @@ const movieSlice = createSlice({
   reducers: {
     setSearchQuery: (state, action) => {
       state.searchQuery = action.payload;
-      state.currentPage = 1;
+      state.currentPage = 1; // Reset to page 1 on new search
     },
     setCurrentPage: (state, action) => {
       state.currentPage = action.payload;
@@ -57,6 +65,7 @@ const movieSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      // Fetching Movies (Search or Popular)
       .addCase(fetchMovies.pending, (state) => {
         state.status = "loading";
       })
@@ -70,8 +79,17 @@ const movieSlice = createSlice({
         state.error = action.error.message;
       })
 
+      // Fetching Trending Movies
+      .addCase(fetchTrendingMovies.pending, (state) => {
+        state.status = "loading";
+      })
       .addCase(fetchTrendingMovies.fulfilled, (state, action) => {
+        state.status = "succeeded";
         state.trendingMovieCards = action.payload;
+      })
+      .addCase(fetchTrendingMovies.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
       });
   },
 });

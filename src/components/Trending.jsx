@@ -27,9 +27,6 @@ const Trending = () => {
         {status === "loading" ? (
           <div className="text-center">
             <div className="loader border-t-4 border-b-4 border-green-500 rounded-full w-16 h-16 animate-spin"></div>
-            <p className="text-lg text-center font-medium mt-2">
-              Loading trending movies...
-            </p>
           </div>
         ) : trendingMovieCards.length > 0 ? (
           trendingMovieCards.map((movie) => (
