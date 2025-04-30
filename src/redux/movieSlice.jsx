@@ -1,51 +1,30 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { API_OPTIONS } from "../utils/constants";
 
+// Async thunk to fetch movies
 export const fetchMovies = createAsyncThunk(
   "movies/fetchMovies",
-  async (searchQuery) => {
-    let data;
+  async ({ searchQuery, page = 1 }) => {
+    const url = searchQuery
+      ? `https://api.themoviedb.org/3/search/movie?query=${searchQuery}&include_adult=false&language=en-US&page=${page}`
+      : `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=${page}&sort_by=popularity.desc`;
 
-    if (searchQuery) {
-      data = await fetch(
-        `https://api.themoviedb.org/3/search/movie?query=${searchQuery}&include_adult=false&language=en-US&page=1`,
-        API_OPTIONS
-      );
-    } else {
-      data = await fetch(
-        "https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc",
-        API_OPTIONS
-      );
-    }
-    const json = await data.json();
-    console.log(json.results);
-    return json.results;
+    const response = await fetch(url, API_OPTIONS);
+    const data = await response.json();
+    return { results: data.results, totalPages: data.total_pages };
   }
 );
 
+// Optional: Keep trending fetch here if needed
 export const fetchTrendingMovies = createAsyncThunk(
   "movies/fetchTrendingMovies",
-  async (searchQuery) => {
-    //fetching trending movies
-    let data = await fetch(
-      "https://api.themoviedb.org/3/trending/movie/day?api_key=b0a3f6e0c5b35d0b4a8d7c0d6cd334a6&language=en-US&page=1",
+  async () => {
+    const response = await fetch(
+      "https://api.themoviedb.org/3/trending/movie/day?language=en-US",
       API_OPTIONS
     );
-    if (searchQuery) {
-      data = await fetch(
-        //fetching movies based on search query
-        `https://api.themoviedb.org/3/search/movie?query=${searchQuery}&include_adult=false&language=en-US&page=1`,
-        API_OPTIONS
-      );
-    } else {
-      data = await fetch(
-        //fetching top rated movies
-        "https://api.themoviedb.org/3/movie/top_rated?page=1",
-        API_OPTIONS
-      );
-    }
-    const json = await data.json();
-    return json.results;
+    const data = await response.json();
+    return data.results;
   }
 );
 
@@ -55,14 +34,19 @@ const movieSlice = createSlice({
     movieCards: [],
     trendingMovieCards: [],
     searchQuery: "",
+    currentPage: 1,
+    totalPages: 1,
     favouriteMovies: JSON.parse(localStorage.getItem("favouriteMovies")) || [],
+    status: "idle",
+    error: null,
   },
   reducers: {
-    setTrendingMovies: (state, action) => {
-      state.trendingMovieCards = action.payload;
-    },
     setSearchQuery: (state, action) => {
       state.searchQuery = action.payload;
+      state.currentPage = 1; // reset to page 1 on new search
+    },
+    setCurrentPage: (state, action) => {
+      state.currentPage = action.payload;
     },
     addFavouriteMovie: (state, action) => {
       state.favouriteMovies.push(action.payload);
@@ -80,31 +64,25 @@ const movieSlice = createSlice({
       })
       .addCase(fetchMovies.fulfilled, (state, action) => {
         state.status = "succeeded";
-        state.movieCards = action.payload;
+        state.movieCards = action.payload.results;
+        state.totalPages = action.payload.totalPages;
       })
       .addCase(fetchMovies.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message;
       })
 
-      .addCase(fetchTrendingMovies.pending, (state) => {
-        state.status = "loading";
-      })
       .addCase(fetchTrendingMovies.fulfilled, (state, action) => {
-        state.status = "succeeded";
         state.trendingMovieCards = action.payload;
-      })
-      .addCase(fetchTrendingMovies.rejected, (state, action) => {
-        state.status = "failed";
-        state.error = action.error.message;
       });
   },
 });
 
 export const {
   setSearchQuery,
-  setTrendingMovies,
+  setCurrentPage,
   addFavouriteMovie,
   removeFavouriteMovie,
 } = movieSlice.actions;
+
 export default movieSlice.reducer;
