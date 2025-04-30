@@ -116,6 +116,7 @@ const NavBar = () => {
           onChange={(e) => setSearchTerm(e.target.value)}
         />
         <button
+          type="button"
           onClick={handleSearch}
           className="bg-green-500 hover:bg-green-600 text-white p-2 rounded transition-colors"
         >
