@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 const Admin = () => {
   const [movies, setMovies] = useState([]);
@@ -36,7 +37,25 @@ const Admin = () => {
       setTitle("");
       setImg("");
       setDescription("");
+      toast.success(`Movie Added Successfully`, {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+      });
     } catch (error) {
+      toast.error("Failed, Please try again", {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+      });
       console.error("Error adding movie:", error);
     }
   };

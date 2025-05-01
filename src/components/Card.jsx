@@ -3,6 +3,7 @@ import { IMG_CDN_URL } from "../utils/constants";
 import { Link } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { addFavouriteMovie, removeFavouriteMovie } from "../redux/movieSlice";
+import { toast } from "react-toastify";
 
 const Card = ({ movie }) => {
   const dispatch = useDispatch();
@@ -12,8 +13,26 @@ const Card = ({ movie }) => {
   const handleFavourite = () => {
     if (isFav) {
       dispatch(removeFavouriteMovie(movie));
+      toast.error("Removed from favourites!", {
+        position: "top-left",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        theme: "colored",
+      });
     } else {
       dispatch(addFavouriteMovie(movie));
+      toast.success("Added to favourites!", {
+        position: "top-left",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        theme: "colored",
+      });
     }
   };
   return (
