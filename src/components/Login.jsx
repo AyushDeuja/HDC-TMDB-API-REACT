@@ -29,7 +29,6 @@ const Login = () => {
               onChange={(e) => setUserName(e.target.value)}
               type="text"
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="you@example.com"
             />
           </div>
           <div className="relative">
@@ -41,7 +40,6 @@ const Login = () => {
               type={showPassword ? "text" : "password"}
               onClick={() => setShowPassword(!showPassword)}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="••••••••"
             />
             <button
               type="button"
