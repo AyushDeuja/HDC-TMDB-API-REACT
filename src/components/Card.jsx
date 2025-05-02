@@ -21,6 +21,7 @@ const Card = ({ movie }) => {
         pauseOnHover: true,
         draggable: true,
         theme: "colored",
+        style: { marginTop: "75px" },
       });
     } else {
       dispatch(addFavouriteMovie(movie));
@@ -32,6 +33,7 @@ const Card = ({ movie }) => {
         pauseOnHover: true,
         draggable: true,
         theme: "colored",
+        style: { marginTop: "75px" },
       });
     }
   };
