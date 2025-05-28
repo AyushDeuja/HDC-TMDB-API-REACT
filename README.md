@@ -6,3 +6,4 @@ Here the user can search multiple movies and add the movies to favourites as wel
 - React
 - Redux
 - React-Router
+- React-Toastify
